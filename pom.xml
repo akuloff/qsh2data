@@ -27,6 +27,31 @@
         </license>
     </licenses>
 
+    <scm>
+        <connection>scm:git:git://github.com/alex09x/qsh2data.git</connection>
+        <developerConnection>scm:git:git@github.com:alex09x/qsh2data.git</developerConnection>
+        <url>http://github.com/alex09x/qsh2data/</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <issueManagement>
+        <system>github</system>
+        <url>http://github.com/alex09x/qsh2data/issues#issue/</url>
+    </issueManagement>
+
+    <distributionManagement>
+        <repository>
+            <id>deployment</id>
+            <name>Internal Releases</name>
+            <url>http://192.168.1.15:8081/nexus/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>deployment</id>
+            <name>Internal Snapshots</name>
+            <url>http://192.168.1.15:8081/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
         <resources>
