@@ -1,6 +1,31 @@
 *.class
 
 # Package Files #
-*.jar
+*.project
+*.classpath
+*.jasper
+*.settings
+*.orig
+*.log
+#*.jar
 *.war
-*.ear
+*.iml
+
+*/target
+**.\#webclasspath
+**.tomcatplugin
+*/work
+
+.idea/workspace.xml
+
+syntax: regexp
+.idea
+
+syntax: regexp
+^[^/]*/bin
+
+syntax:glob
+*/src/main/autogen
+
+syntax:regexp
+.iml
