@@ -23,7 +23,7 @@ public class StockStream<T> extends Stream<T> {
     public T read(Timestamp currentDateTime) throws IOException {
         int rows = DataReader.readPackInt(dataInput);
 
-        List<Quote> quotes = new ArrayList<>();
+        List<Quote> quotes = new ArrayList<>(rows);
 
         for (int i = 0; i < rows; i++) {
             int price = DataReader.readRelative(dataInput, basePrice) * stepPrice;

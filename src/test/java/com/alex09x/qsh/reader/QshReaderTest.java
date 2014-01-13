@@ -15,7 +15,7 @@ import java.util.Iterator;
 public class QshReaderTest {
     @Test
     public void testDeal() throws Exception {
-        Iterator<Deal> open = new QshReader().open("src/test/resources/Ticks.RTS-12.13_FT.2013-12-10.qsh");
+        Iterator<Deal> open = new QshReader().openPath("src/test/resources/Ticks.RTS-12.13_FT.2013-12-10.qsh");
 
         double priceSum = 0;
         int volumeSum = 0;
@@ -39,7 +39,7 @@ public class QshReaderTest {
 
     @Test
     public void testQuotes() throws Exception {
-        Iterator<Quotes> open = new QshReader().open("src/test/resources/Stock.RTS-12.13_FT.2013-12-10.qsh");
+        Iterator<Quotes> open = new QshReader().openPath("src/test/resources/Stock.RTS-12.13_FT.2013-12-10.qsh");
 
         double priceSum = 0;
         int volumeSum = 0;
@@ -60,6 +60,6 @@ public class QshReaderTest {
         MatcherAssert.assertThat(priceSum, CoreMatchers.equalTo(125728129600D));
         MatcherAssert.assertThat(volumeSum, CoreMatchers.equalTo(76038273));
         MatcherAssert.assertThat(typeSum, CoreMatchers.equalTo(3141022));
-        MatcherAssert.assertThat(count, CoreMatchers.equalTo(282119));
+        MatcherAssert.assertThat(count, CoreMatchers.equalTo(893420));
     }
 }

@@ -20,7 +20,7 @@ public class DataFile {
         return true;
     }
 
-    public static DataInputStream getReader(FileInputStream fs) throws IOException {
+    public static DataInputStream getReader(InputStream fs) throws IOException {
         byte[] buffer = new byte[prefix.length];
 
         InputStream stream = new GZIPInputStream(fs);

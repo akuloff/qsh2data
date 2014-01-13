@@ -3,6 +3,8 @@ package com.alex09x.qsh.reader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Iterator;
 
 /**
  * User: alex
@@ -11,8 +13,16 @@ import java.io.IOException;
  */
 public class QshReader<T> {
 
-    public QshReader3<T> open(String path) throws IOException {
+    public Iterator<T> openStream(InputStream inputStream) throws IOException {
+        return getQshReader3(inputStream);
+    }
+
+    public Iterator<T> openPath(String path) throws IOException {
         FileInputStream fileInputStream = new FileInputStream(path);
+        return getQshReader3(fileInputStream);
+    }
+
+    private Iterator<T> getQshReader3(InputStream fileInputStream) throws IOException {
         DataInputStream dataInputStream = DataFile.getReader(fileInputStream);
 
         int version = dataInputStream.readByte();
