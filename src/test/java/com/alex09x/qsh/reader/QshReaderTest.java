@@ -7,17 +7,20 @@ import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.testng.annotations.Test;
 
+import java.util.Iterator;
+
 /**
  * Created by alex on 12.01.14.
  */
 public class QshReaderTest {
     @Test
     public void testDeal() throws Exception {
-        QshReader3<Deal> open = new QshReader().open("src/test/resources/Ticks.RTS-12.13_FT.2013-12-10.qsh");
+        Iterator<Deal> open = new QshReader().open("src/test/resources/Ticks.RTS-12.13_FT.2013-12-10.qsh");
 
         double priceSum = 0;
         int volumeSum = 0;
         int typeSum = 0;
+        int count = 0;
 
         while (open.hasNext()) {
             Deal next = open.next();
@@ -25,23 +28,23 @@ public class QshReaderTest {
             priceSum += next.getPrice();
             volumeSum += next.getVolume();
             typeSum += next.getType().getValue();
+            count++;
         }
 
         MatcherAssert.assertThat(priceSum, CoreMatchers.equalTo(31105791460D));
         MatcherAssert.assertThat(volumeSum, CoreMatchers.equalTo(702226));
         MatcherAssert.assertThat(typeSum, CoreMatchers.equalTo(333823));
-
-//        price sum 3.110579146E10, volume sum 702226, type sum333823
-        System.out.println("price sum " + priceSum + ", volume sum " + volumeSum + ", type sum " + typeSum);
+        MatcherAssert.assertThat(count, CoreMatchers.equalTo(221022));
     }
 
     @Test
     public void testQuotes() throws Exception {
-        QshReader3<Quotes> open = new QshReader().open("src/test/resources//Stock.RTS-12.13_FT.2013-12-10.qsh");
+        Iterator<Quotes> open = new QshReader().open("src/test/resources/Stock.RTS-12.13_FT.2013-12-10.qsh");
 
         double priceSum = 0;
         int volumeSum = 0;
         int typeSum = 0;
+        int count = 0;
 
         while (open.hasNext()) {
             Quotes next = open.next();
@@ -50,15 +53,13 @@ public class QshReaderTest {
                 priceSum += quote.getPrice();
                 volumeSum += quote.getVolume();
                 typeSum += quote.getType().getValue();
+                count++;
             }
         }
-
 
         MatcherAssert.assertThat(priceSum, CoreMatchers.equalTo(125728129600D));
         MatcherAssert.assertThat(volumeSum, CoreMatchers.equalTo(76038273));
         MatcherAssert.assertThat(typeSum, CoreMatchers.equalTo(3141022));
-
-//        price sum 1.257281296E11, volume sum 76038273, type sum 3141022
-        System.out.println("price sum " + priceSum + ", volume sum " + volumeSum + ", type sum " + typeSum);
+        MatcherAssert.assertThat(count, CoreMatchers.equalTo(282119));
     }
 }
