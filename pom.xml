@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>qsh2data</artifactId>
-    <groupId>com.alex09x.forts</groupId>
+    <groupId>com.alex09x.qscalp</groupId>
     <version>0.1-SNAPSHOT</version>
 
     <name>QScalp data</name>
