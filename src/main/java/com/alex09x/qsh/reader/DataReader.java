@@ -1,5 +1,7 @@
 package com.alex09x.qsh.reader;
 
+import com.alex09x.qsh.reader.type.Leb128;
+
 import java.io.DataInput;
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -9,22 +11,37 @@ import java.sql.Timestamp;
  */
 public class DataReader {
     public static Timestamp readDateTime(DataInput dataInput, Timestamp baseDateTime) throws IOException {
-        int offset = Utils.readUShort(dataInput);
-        if (offset == Utils.USHORT_MAX_VALUE) {
-            long time = Utils.readLong(dataInput);
+        long newMillis = readGrowing(dataInput, baseDateTime.getTime());
+        return new Timestamp(newMillis);
+//        int offset = Utils.readUShort(dataInput);
+//        if (offset == Utils.USHORT_MAX_VALUE) {
+//            long time = Utils.readLong(dataInput);
+//
+//            Timestamp timestamp = Utils.tick2date(time);
+//            baseDateTime.setTime(timestamp.getTime());
+//            return timestamp;
+//        } else {
+//            long time = baseDateTime.getTime() + offset;
+//            Timestamp timestamp = new Timestamp(time);
+//            return timestamp;
+//        }
+    }
 
-            Timestamp timestamp = Utils.tick2date(time);
-            baseDateTime.setTime(timestamp.getTime());
-            return timestamp;
+    public static long readGrowing(DataInput dataInput, long lastValue) throws IOException {
+        long offset = Leb128.readUnsignedLeb128(dataInput);
+        if (offset == 268435455) {
+            return lastValue + Leb128.readSignedLeb128(dataInput);
         } else {
-            long time = baseDateTime.getTime() + offset;
-            Timestamp timestamp = new Timestamp(time);
-            return timestamp;
+            return lastValue + offset;
         }
     }
 
+    public static long readLeb128(DataInput dataInput) throws IOException {
+        return Leb128.readSignedLeb128(dataInput);
+    }
+
     public static int readRelative(DataInput dataInput, int[] baseValue) throws IOException {
-        int offset = dataInput.readByte();
+        int offset = dataInput.readUnsignedByte();
 
         if (offset == Byte.MIN_VALUE) {
             return baseValue[0] = Utils.readInt(dataInput);

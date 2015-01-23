@@ -15,7 +15,7 @@ import java.util.Iterator;
 public class QshReaderTest {
     @Test
     public void testDeal() throws Exception {
-        Iterator<Deal> open = new QshReader().openPath("src/test/resources/Ticks.RTS-12.13_FT.2013-12-10.qsh");
+        Iterator<Deal> open = new QshReader().openPath("/home/alexey/trading-history/Ticks.RTS-3.15_FT.2015-01-16.qsh");
 
         double priceSum = 0;
         int volumeSum = 0;
@@ -24,6 +24,7 @@ public class QshReaderTest {
 
         while (open.hasNext()) {
             Deal next = open.next();
+            System.out.println(next);
 
             priceSum += next.getPrice();
             volumeSum += next.getVolume();
@@ -39,7 +40,7 @@ public class QshReaderTest {
 
     @Test
     public void testQuotes() throws Exception {
-        Iterator<Quotes> open = new QshReader().openPath("src/test/resources/Stock.RTS-12.13_FT.2013-12-10.qsh");
+        Iterator<Quotes> open = new QshReader().openPath("/home/alexey/trading-history/Stock.RTS-3.15_FT.2015-01-16.qsh");
 
         double priceSum = 0;
         int volumeSum = 0;
@@ -48,6 +49,7 @@ public class QshReaderTest {
 
         while (open.hasNext()) {
             Quotes next = open.next();
+            System.out.println(next);
 
             for (Quote quote : next.getQuotes()) {
                 priceSum += quote.getPrice();

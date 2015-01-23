@@ -1,9 +1,9 @@
 package com.alex09x.qsh.reader;
 
 import com.alex09x.qsh.reader.type.StreamType;
-import com.alex09x.qsh.reader.v3.DealsStream;
-import com.alex09x.qsh.reader.v3.StockStream;
-import com.alex09x.qsh.reader.v3.Stream;
+import com.alex09x.qsh.reader.v4.DealsStream;
+import com.alex09x.qsh.reader.v4.StockStream;
+import com.alex09x.qsh.reader.v4.Stream;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -16,7 +16,6 @@ import java.util.Iterator;
 public class QshReader4<T> implements Iterator<T> {
     private final DataInputStream dataInput;
     private Timestamp currentDateTime;
-    private long lassMillis;
     private Stream<T> stream;
     private boolean isRead = true;
 

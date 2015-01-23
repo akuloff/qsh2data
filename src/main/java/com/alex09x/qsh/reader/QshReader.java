@@ -28,8 +28,8 @@ public class QshReader<T> {
         int version = dataInputStream.readByte();
 
         switch (version) {
-            case 3:
-                return new QshReader3(dataInputStream);
+            case 4:
+                return new QshReader4(dataInputStream);
             default:
                 throw new IOException("Unsupported file version (" + version + ")");
         }
