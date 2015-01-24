@@ -1,6 +1,7 @@
-package com.alex09x.qsh.reader.v3;
+package com.alex09x.qsh.reader.v4;
 
 import com.alex09x.qsh.reader.DataReader;
+import com.alex09x.qsh.reader.Stream;
 import com.alex09x.qsh.reader.type.Quote;
 import com.alex09x.qsh.reader.type.QuoteType;
 import com.alex09x.qsh.reader.type.Quotes;
@@ -14,20 +15,22 @@ import java.util.List;
 /**
  * Created by alex on 10.01.14.
  */
-public class StockStream<T> extends Stream3<T> {
+public class StockStream<T> extends Stream<T> {
+    public long lastPrice;
 
     public StockStream(DataInput dataInput) throws IOException {
         super(dataInput);
     }
 
     public T read(Timestamp currentDateTime) throws IOException {
-        int rows = DataReader.readPackInt(dataInput);
+        int rows = (int)DataReader.readLeb128(dataInput);
 
         List<Quote> quotes = new ArrayList<>(rows);
 
         for (int i = 0; i < rows; i++) {
-            double price = DataReader.readRelative(dataInput, basePrice) * stepPrice;
-            int volume = DataReader.readPackInt(dataInput);
+            lastPrice += DataReader.readLeb128(dataInput);
+            double price = lastPrice * stepPrice;
+            int volume = (int)DataReader.readLeb128(dataInput);
 
             if (volume > 0) {
                 quotes.add(new Quote(price, volume, QuoteType.ASK));

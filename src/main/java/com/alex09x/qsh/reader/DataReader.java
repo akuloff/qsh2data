@@ -1,5 +1,7 @@
 package com.alex09x.qsh.reader;
 
+import com.alex09x.qsh.reader.type.Leb128;
+
 import java.io.DataInput;
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -8,6 +10,7 @@ import java.sql.Timestamp;
  * Created by alex on 09.01.14.
  */
 public class DataReader {
+
     public static Timestamp readDateTime(DataInput dataInput, Timestamp baseDateTime) throws IOException {
         int offset = Utils.readUShort(dataInput);
         if (offset == Utils.USHORT_MAX_VALUE) {
@@ -21,6 +24,24 @@ public class DataReader {
             Timestamp timestamp = new Timestamp(time);
             return timestamp;
         }
+    }
+
+    public static Timestamp readGrowingDateTime(DataInput dataInput, Timestamp baseDateTime) throws IOException {
+        long newMillis = readGrowing(dataInput, baseDateTime.getTime());
+        return new Timestamp(newMillis);
+    }
+
+    public static long readGrowing(DataInput dataInput, long lastValue) throws IOException {
+        long offset = Leb128.readUnsignedLeb128(dataInput);
+        if (offset == 268435455) {
+            return lastValue + Leb128.readSignedLeb128(dataInput);
+        } else {
+            return lastValue + offset;
+        }
+    }
+
+    public static long readLeb128(DataInput dataInput) throws IOException {
+        return Leb128.readSignedLeb128(dataInput);
     }
 
     public static int readRelative(DataInput dataInput, int[] baseValue) throws IOException {

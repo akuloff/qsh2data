@@ -4,17 +4,17 @@ package com.alex09x.qsh.reader.type;
  * Created by alex on 12.01.14.
  */
 public class Quote {
-    private final int price;
+    private final double price;
     private final int volume;
     private final QuoteType type;
 
-    public Quote(int price, int volume, QuoteType type) {
+    public Quote(double price, int volume, QuoteType type) {
         this.price = price;
         this.volume = volume;
         this.type = type;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 

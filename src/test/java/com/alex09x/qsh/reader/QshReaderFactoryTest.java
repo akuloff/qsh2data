@@ -12,10 +12,10 @@ import java.util.Iterator;
 /**
  * Created by alex on 12.01.14.
  */
-public class QshReaderTest {
+public class QshReaderFactoryTest {
     @Test
     public void testDeal() throws Exception {
-        Iterator<Deal> open = new QshReader().openPath("src/test/resources/Ticks.RTS-12.13_FT.2013-12-10.qsh");
+        Iterator<Deal> open = new QshReaderFactory().openPath("src/test/resources/Ticks.RTS-12.13_FT.2013-12-10.qsh");
 
         double priceSum = 0;
         int volumeSum = 0;
@@ -39,7 +39,7 @@ public class QshReaderTest {
 
     @Test
     public void testQuotes() throws Exception {
-        Iterator<Quotes> open = new QshReader().openPath("src/test/resources/Stock.RTS-12.13_FT.2013-12-10.qsh");
+        Iterator<Quotes> open = new QshReaderFactory().openPath("src/test/resources/Stock.RTS-12.13_FT.2013-12-10.qsh");
 
         double priceSum = 0;
         int volumeSum = 0;
