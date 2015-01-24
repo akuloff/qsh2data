@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 /**
  * Created by alex on 11.01.14.
  */
-public class DealsStream<T> extends Stream<T> {
+public class DealsStream<T> extends Stream3<T> {
     public double lastPrice;
     public int lastVolume;
     private Timestamp baseDateTime = new Timestamp(0);

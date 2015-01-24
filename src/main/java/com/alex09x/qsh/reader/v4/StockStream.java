@@ -1,6 +1,7 @@
 package com.alex09x.qsh.reader.v4;
 
 import com.alex09x.qsh.reader.DataReader;
+import com.alex09x.qsh.reader.Stream;
 import com.alex09x.qsh.reader.type.Quote;
 import com.alex09x.qsh.reader.type.QuoteType;
 import com.alex09x.qsh.reader.type.Quotes;

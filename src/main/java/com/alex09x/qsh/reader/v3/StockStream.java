@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by alex on 10.01.14.
  */
-public class StockStream<T> extends Stream<T> {
+public class StockStream<T> extends Stream3<T> {
 
     public StockStream(DataInput dataInput) throws IOException {
         super(dataInput);

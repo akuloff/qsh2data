@@ -1,4 +1,4 @@
-package com.alex09x.qsh.reader.v4;
+package com.alex09x.qsh.reader;
 
 import com.alex09x.qsh.reader.Utils;
 
