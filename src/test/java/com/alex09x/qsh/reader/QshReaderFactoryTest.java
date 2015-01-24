@@ -15,7 +15,7 @@ import java.util.Iterator;
 public class QshReaderFactoryTest {
     @Test
     public void testDeal() throws Exception {
-        Iterator<Deal> open = new QshReaderFactory().openPath("/home/alexey/trading-history/Ticks.RTS-3.15_FT.2015-01-16.qsh");
+        Iterator<Deal> open = new QshReaderFactory().openPath("src/test/resources/Ticks.RTS-12.13_FT.2013-12-10.qsh");
 
         double priceSum = 0;
         int volumeSum = 0;
@@ -40,7 +40,7 @@ public class QshReaderFactoryTest {
 
     @Test
     public void testQuotes() throws Exception {
-        Iterator<Quotes> open = new QshReaderFactory().openPath("/home/alexey/trading-history/Stock.RTS-3.15_FT.2015-01-16.qsh");
+        Iterator<Quotes> open = new QshReaderFactory().openPath("src/test/resources/Stock.RTS-12.13_FT.2013-12-10.qsh");
 
         double priceSum = 0;
         int volumeSum = 0;
