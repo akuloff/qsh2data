@@ -1,4 +1,4 @@
-package com.alex09x.qsh.reader.v4;
+package com.alex09x.qsh.reader.v3;
 
 import com.alex09x.qsh.reader.Utils;
 
@@ -13,6 +13,7 @@ public abstract class Stream<T> {
     protected final DataInput dataInput;
     protected final String symbol;
     protected final double stepPrice;
+    protected final int[] basePrice = new int[1];
 
     public Stream(DataInput dataInput) throws IOException {
         this.dataInput = dataInput;
@@ -24,5 +25,4 @@ public abstract class Stream<T> {
     }
 
     public abstract T read(Timestamp currentDateTime) throws IOException;
-
 }

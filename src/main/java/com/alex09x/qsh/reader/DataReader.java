@@ -10,21 +10,25 @@ import java.sql.Timestamp;
  * Created by alex on 09.01.14.
  */
 public class DataReader {
+
     public static Timestamp readDateTime(DataInput dataInput, Timestamp baseDateTime) throws IOException {
+        int offset = Utils.readUShort(dataInput);
+        if (offset == Utils.USHORT_MAX_VALUE) {
+            long time = Utils.readLong(dataInput);
+
+            Timestamp timestamp = Utils.tick2date(time);
+            baseDateTime.setTime(timestamp.getTime());
+            return timestamp;
+        } else {
+            long time = baseDateTime.getTime() + offset;
+            Timestamp timestamp = new Timestamp(time);
+            return timestamp;
+        }
+    }
+
+    public static Timestamp readGrowingDateTime(DataInput dataInput, Timestamp baseDateTime) throws IOException {
         long newMillis = readGrowing(dataInput, baseDateTime.getTime());
         return new Timestamp(newMillis);
-//        int offset = Utils.readUShort(dataInput);
-//        if (offset == Utils.USHORT_MAX_VALUE) {
-//            long time = Utils.readLong(dataInput);
-//
-//            Timestamp timestamp = Utils.tick2date(time);
-//            baseDateTime.setTime(timestamp.getTime());
-//            return timestamp;
-//        } else {
-//            long time = baseDateTime.getTime() + offset;
-//            Timestamp timestamp = new Timestamp(time);
-//            return timestamp;
-//        }
     }
 
     public static long readGrowing(DataInput dataInput, long lastValue) throws IOException {
@@ -41,7 +45,7 @@ public class DataReader {
     }
 
     public static int readRelative(DataInput dataInput, int[] baseValue) throws IOException {
-        int offset = dataInput.readUnsignedByte();
+        int offset = dataInput.readByte();
 
         if (offset == Byte.MIN_VALUE) {
             return baseValue[0] = Utils.readInt(dataInput);

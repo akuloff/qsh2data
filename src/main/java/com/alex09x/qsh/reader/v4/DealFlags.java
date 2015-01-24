@@ -1,4 +1,4 @@
-package com.alex09x.qsh.reader.type;
+package com.alex09x.qsh.reader.v4;
 
 /**
  * Created by alex on 12.01.14.

@@ -1,5 +1,8 @@
 package com.alex09x.qsh.reader;
 
+import com.alex09x.qsh.reader.v3.QshReader3;
+import com.alex09x.qsh.reader.v4.QshReader4;
+
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -11,7 +14,7 @@ import java.util.Iterator;
  * Date: 09.01.14
  * Time: 17:21
  */
-public class QshReader<T> {
+public class QshReaderFactory<T> {
 
     public Iterator<T> openStream(InputStream inputStream) throws IOException {
         return getQshReader3(inputStream);
@@ -28,8 +31,10 @@ public class QshReader<T> {
         int version = dataInputStream.readByte();
 
         switch (version) {
+            case 3:
+                return new QshReader3<>(dataInputStream);
             case 4:
-                return new QshReader4(dataInputStream);
+                return new QshReader4<>(dataInputStream);
             default:
                 throw new IOException("Unsupported file version (" + version + ")");
         }

@@ -1,5 +1,7 @@
-package com.alex09x.qsh.reader;
+package com.alex09x.qsh.reader.v4;
 
+import com.alex09x.qsh.reader.DataReader;
+import com.alex09x.qsh.reader.Utils;
 import com.alex09x.qsh.reader.type.StreamType;
 import com.alex09x.qsh.reader.v4.DealsStream;
 import com.alex09x.qsh.reader.v4.StockStream;
@@ -34,17 +36,17 @@ public class QshReader4<T> implements Iterator<T> {
 
 
         if (StreamType.STOCK.getValue() == streamType) {
-            stream = new StockStream(dataInput);
+            stream = new StockStream<>(dataInput);
             System.out.printf("Stream type = %s%n", StreamType.STOCK);
         } else if (StreamType.DEALS.getValue() == streamType) {
-            stream = new DealsStream(dataInput);
+            stream = new DealsStream<>(dataInput);
             System.out.printf("Stream type = %s%n", StreamType.DEALS);
         }
     }
 
     private boolean readNextRecordHeader() {
         try {
-            currentDateTime = DataReader.readDateTime(dataInput, currentDateTime);
+            currentDateTime = DataReader.readGrowingDateTime(dataInput, currentDateTime);
 //            lassMillis = DataReader.readGrowing(dataInput, lassMillis);
         } catch (IOException e) {
             return false;

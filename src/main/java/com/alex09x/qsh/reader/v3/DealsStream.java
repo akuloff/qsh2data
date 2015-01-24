@@ -1,4 +1,4 @@
-package com.alex09x.qsh.reader.v4;
+package com.alex09x.qsh.reader.v3;
 
 import com.alex09x.qsh.reader.DataReader;
 import com.alex09x.qsh.reader.type.Deal;
@@ -12,11 +12,9 @@ import java.sql.Timestamp;
  * Created by alex on 11.01.14.
  */
 public class DealsStream<T> extends Stream<T> {
-    public long lastPrice;
+    public double lastPrice;
     public int lastVolume;
-    public int lastOI;
-    private long lassMillis;
-    private long lastId;
+    private Timestamp baseDateTime = new Timestamp(0);
 
     public DealsStream(DataInput dataInput) throws IOException {
         super(dataInput);
@@ -28,38 +26,28 @@ public class DealsStream<T> extends Stream<T> {
         int type = dataInput.readUnsignedByte();
 
         if ((type & DealFlags.DATE_TIME.getValue()) > 0) {
-            lassMillis = DataReader.readGrowing(dataInput, lassMillis);
+            DataReader.readDateTime(dataInput, baseDateTime);
         }
-//        Timestamp timestamp = Utils.millis2Timestamp(lassMillis);
         deal.setTime(currentDateTime);
-        if ((type & DealFlags.ID.getValue()) > 0) {
-            lastId = DataReader.readGrowing(dataInput, lastId);
-        }
-        if ((type & DealFlags.ORDER_ID.getValue()) > 0) {
-            DataReader.readLeb128(dataInput);
-        }
 
         if ((type & DealFlags.PRICE.getValue()) > 0) {
-            lastPrice += DataReader.readLeb128(dataInput);
+            lastPrice = DataReader.readRelative(dataInput, basePrice) * stepPrice;
         }
-        deal.setPrice(lastPrice * stepPrice);
+        deal.setPrice(lastPrice);
+
 
         if ((type & DealFlags.VOLUME.getValue()) > 0) {
-            lastVolume = (int)DataReader.readLeb128(dataInput);
-        }
-        if ((type & DealFlags.OI.getValue()) > 0) {
-            lastOI += (int)DataReader.readLeb128(dataInput);
+            lastVolume = DataReader.readPackInt(dataInput);
         }
         deal.setVolume(lastVolume);
 
-//        int dealType = type & DealFlags.TYPE.getValue();
         int dealType = type & DealFlags.TYPE.getValue();
 
         if (dealType == 2) {
             deal.setType(DealType.SELL);
         } else if (dealType == 1) {
             deal.setType(DealType.BUY);
-        } else {//if (dealType == 0) {
+        } else if (dealType == 0) {
             deal.setType(DealType.UNKNOWN);
         }
 

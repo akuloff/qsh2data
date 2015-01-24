@@ -12,6 +12,7 @@
 *.iml
 
 */target
+target
 **.\#webclasspath
 **.tomcatplugin
 */work
