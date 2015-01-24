@@ -24,7 +24,6 @@ public class QshReaderFactoryTest {
 
         while (open.hasNext()) {
             Deal next = open.next();
-            System.out.println(next);
 
             priceSum += next.getPrice();
             volumeSum += next.getVolume();
@@ -49,7 +48,6 @@ public class QshReaderFactoryTest {
 
         while (open.hasNext()) {
             Quotes next = open.next();
-            System.out.println(next);
 
             for (Quote quote : next.getQuotes()) {
                 priceSum += quote.getPrice();
