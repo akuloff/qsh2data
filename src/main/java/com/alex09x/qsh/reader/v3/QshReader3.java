@@ -3,13 +3,9 @@ package com.alex09x.qsh.reader.v3;
 import com.alex09x.qsh.reader.DataReader;
 import com.alex09x.qsh.reader.QshReader;
 import com.alex09x.qsh.reader.Stream;
-import com.alex09x.qsh.reader.Utils;
-import com.alex09x.qsh.reader.type.StreamType;
 
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.Iterator;
 
 /**
  * Created by alex on 09.01.14.
@@ -40,4 +36,8 @@ public class QshReader3<T> extends QshReader<T> {
         return true;
     }
 
+    @Override
+    protected Stream<T> createFullOrdersLogStream() throws IOException {
+        throw new UnsupportedOperationException("Not supported.");
+    }
 }

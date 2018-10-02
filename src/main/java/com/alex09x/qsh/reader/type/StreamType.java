@@ -10,6 +10,7 @@ public enum StreamType {
     TRADES(0X40),
     MESSAGES(0X50),
     AUXINFO(0X60),
+    FULLORDERSLOG(0X70),
     NONE(0);
     private final int value;
 

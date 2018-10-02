@@ -1,7 +1,5 @@
 package com.alex09x.qsh.reader;
 
-import com.alex09x.qsh.reader.type.Deal;
-import com.alex09x.qsh.reader.type.Quotes;
 import com.alex09x.qsh.reader.type.StreamType;
 
 import java.io.DataInputStream;
@@ -36,6 +34,9 @@ public abstract class QshReader<T> implements Iterator<T> {
         } else if (StreamType.DEALS.getValue() == streamType) {
             stream = createDealStream();
             System.out.printf("Stream type = %s%n", StreamType.DEALS);
+        } else if (StreamType.FULLORDERSLOG.getValue() == streamType) {
+            stream = createFullOrdersLogStream();
+            System.out.printf("Stream type = %s%n", StreamType.FULLORDERSLOG);
         } else {
             throw new RuntimeException("Unknown stream type " + streamType);
         }
@@ -44,6 +45,8 @@ public abstract class QshReader<T> implements Iterator<T> {
     protected abstract Stream<T> createQuotesStream() throws IOException;
 
     protected abstract Stream<T> createDealStream() throws IOException;
+
+    protected abstract Stream<T> createFullOrdersLogStream() throws IOException;
 
     protected abstract boolean readNextRecordHeader();
 
