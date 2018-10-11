@@ -17,15 +17,15 @@ import java.util.Iterator;
 public class QshReaderFactory<T> {
 
     public Iterator<T> openStream(InputStream inputStream) throws IOException {
-        return getQshReader3(inputStream);
+        return getQshReader(inputStream);
     }
 
     public Iterator<T> openPath(String path) throws IOException {
         FileInputStream fileInputStream = new FileInputStream(path);
-        return getQshReader3(fileInputStream);
+        return getQshReader(fileInputStream);
     }
 
-    private Iterator<T> getQshReader3(InputStream fileInputStream) throws IOException {
+    private Iterator<T> getQshReader(InputStream fileInputStream) throws IOException {
         DataInputStream dataInputStream = DataFile.getReader(fileInputStream);
 
         int version = dataInputStream.readByte();
