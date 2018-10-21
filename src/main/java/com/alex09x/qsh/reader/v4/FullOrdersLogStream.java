@@ -55,17 +55,17 @@ public class FullOrdersLogStream<T> extends Stream<T> {
         new_sess = (tradeFlags & 2) > 0;
         end_trans = (tradeFlags & 1024) > 0;
         
-        record.setIsNewSession(new_sess);
-        record.setIsEndTransaction(end_trans);
+        record.setNewSession(new_sess);
+        record.setEndTransaction(end_trans);
         
-        record.setIsMoved((tradeFlags & 4096) > 0);  //признак перемещения заявки (move)
+        record.setMoved((tradeFlags & 4096) > 0);  //признак перемещения заявки (move)
         
         //признак удаления заявки
-        record.setIsCanceled( ((tradeFlags & 8192) > 0) || ((tradeFlags & 16384) > 0) );
-        record.setIsCrossTrade((tradeFlags & 32768) > 0);
-        record.setIsQuote((tradeFlags & 128) > 0);
-        record.setIsCounter((tradeFlags & (1 << 8)) > 0);
-        record.setIsNonSystem((tradeFlags & (1 << 9)) > 0);
+        record.setCanceled( ((tradeFlags & 8192) > 0) || ((tradeFlags & 16384) > 0) );
+        record.setCrossTrade((tradeFlags & 32768) > 0);
+        record.setQuote((tradeFlags & 128) > 0);
+        record.setCounter((tradeFlags & (1 << 8)) > 0);
+        record.setNonSystem((tradeFlags & (1 << 9)) > 0);
         
         if ((tradeFlags & 16) > 0) {
             dealType = DealType.BUY;
@@ -79,8 +79,8 @@ public class FullOrdersLogStream<T> extends Stream<T> {
         is_fill = (tradeFlags & 8) > 0;
         
         record.setType(dealType);
-        record.setIsAdd(is_new);
-        record.setIsFill(is_fill);
+        record.setAdd(is_new);
+        record.setFill(is_fill);
         
         if ((h & 1) > 0) {
             lastMillis = DataReader.readGrowing(dataInput, lastMillis);
